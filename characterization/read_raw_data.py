@@ -23,10 +23,10 @@ import pandas as pd
 from feature_extraction.general_helpers import clean_chunk
 from feature_extraction.type_detection import detect_field_type, data_type_to_general_type, data_types, general_types
 
-raw_data_dir = '../raw'
+raw_data_dir = '/media/vidi/Elements/Code/research/vis-data/download/viznet/raw/'
 
 data_dirs = {
-    'plotly': join(raw_data_dir, 'plotly'),
+    'plotly': join(raw_data_dir, 'splits'),
     'manyeyes': join(raw_data_dir, 'manyeyes'),
     'webtables': join(raw_data_dir, 'webtables'),
     'opendata': join(raw_data_dir, 'opendata')
@@ -38,8 +38,10 @@ CHUNK_SIZE = 500
 def get_plotly_dfs(limit=None, exact_num_fields=None, min_fields=None, max_fields=None):
     corpus = 'plotly'
     base_dir = data_dirs[corpus]
-    files = [ f for f in listdir(base_dir) if f.endswith('.tsv') ]
+    files = [f for f in listdir(base_dir) if f.endswith('.tsv') ]
+    print(files)
     for f in files[:limit]:
+        print(f)
         raw_df_chunks = pd.read_csv(
             join(data_dirs[corpus], f),
             sep='\t',
@@ -75,7 +77,8 @@ def get_plotly_dfs(limit=None, exact_num_fields=None, min_fields=None, max_field
                 result = {
                     'df': df,
                     'dataset_id': dataset_id,
-                    'locator': locator
+                    'locator': locator,
+                    'chart_data': chart_obj.chart_data
                 }
                 yield result
 
