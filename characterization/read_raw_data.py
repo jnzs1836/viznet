@@ -24,13 +24,15 @@ from feature_extraction.general_helpers import clean_chunk
 from feature_extraction.type_detection import detect_field_type, data_type_to_general_type, data_types, general_types
 
 raw_data_dir = '/media/vidi/Elements/Code/research/vis-data/download/viznet/raw/'
-
+raw_data_dir = '/home/vidi/Work/text-vis/vizml/'
 data_dirs = {
-    'plotly': join(raw_data_dir, 'splits'),
+    'plotly': join(raw_data_dir, 'data'),
     'manyeyes': join(raw_data_dir, 'manyeyes'),
     'webtables': join(raw_data_dir, 'webtables'),
     'opendata': join(raw_data_dir, 'opendata')
 }
+
+tsv_file = 'plotly_plots_with_full_data_with_all_fields_and_header.tsv'
 
 
 CHUNK_SIZE = 500
@@ -40,6 +42,7 @@ def get_plotly_dfs(limit=None, exact_num_fields=None, min_fields=None, max_field
     base_dir = data_dirs[corpus]
     files = [f for f in listdir(base_dir) if f.endswith('.tsv') ]
     print(files)
+    files = [tsv_file]
     for f in files[:limit]:
         print(f)
         raw_df_chunks = pd.read_csv(
